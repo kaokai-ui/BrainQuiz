@@ -38,6 +38,18 @@ const progressList = document.getElementById("progressList");
 let answerVisible = true;
 let latestContext = null;
 
+function setTextContent(element, value) {
+  if (element) {
+    element.textContent = value;
+  }
+}
+
+function setHidden(element, hidden) {
+  if (element) {
+    element.classList.toggle("is-hidden", hidden);
+  }
+}
+
 function formatToday(date) {
   return (
     new Intl.DateTimeFormat("zh-TW", {
@@ -109,8 +121,10 @@ function getDeckProgress(deckName, todayIso, totalQuestions) {
 
 function setAnswerVisibility(visible) {
   answerVisible = visible;
-  answerText.classList.toggle("is-concealed", !visible);
-  toggleAnswerButton.textContent = visible ? "隱藏答案" : "顯示答案";
+  if (answerText) {
+    answerText.classList.toggle("is-concealed", !visible);
+  }
+  setTextContent(toggleAnswerButton, visible ? "隱藏答案" : "顯示答案");
 }
 
 function getQuestionPreview(questionTextValue) {
@@ -119,6 +133,10 @@ function getQuestionPreview(questionTextValue) {
 }
 
 function populateProgressDeckOptions() {
+  if (!progressDeckSelect) {
+    return;
+  }
+
   progressDeckSelect.innerHTML = "";
 
   for (const deckName of DECK_ORDER) {
@@ -130,6 +148,19 @@ function populateProgressDeckOptions() {
 }
 
 function renderProgressPanel(context, preferredDeckName) {
+  if (
+    !progressDeckSelect ||
+    !progressFilterSelect ||
+    !progressDeckLabel ||
+    !progressUsedCount ||
+    !progressRemainingCount ||
+    !progressCurrentCount ||
+    !progressHint ||
+    !progressList
+  ) {
+    return;
+  }
+
   const deckName = preferredDeckName || progressDeckSelect.value || DECK_ORDER[0];
   const questions = window.BRAIN_QUIZ_DATA?.[deckName] || [];
   const filter = progressFilterSelect.value || "all";
@@ -182,9 +213,13 @@ function renderProgressPanel(context, preferredDeckName) {
 }
 
 function toggleProgressPanel(context, preferredDeckName) {
+  if (!progressPanel || !progressButton) {
+    return;
+  }
+
   const willShow = progressPanel.classList.contains("is-hidden");
   progressPanel.classList.toggle("is-hidden", !willShow);
-  progressButton.textContent = willShow ? "收起出題進度" : "查看出題進度";
+  setTextContent(progressButton, willShow ? "收起出題進度" : "查看出題進度");
 
   if (willShow) {
     renderProgressPanel(context, preferredDeckName);
@@ -194,14 +229,14 @@ function toggleProgressPanel(context, preferredDeckName) {
 function renderWeekdayGame(deckName, context) {
   const questions = window.BRAIN_QUIZ_DATA?.[deckName] || [];
 
-  todayLabel.textContent = context.todayLabel;
-  deckLabel.textContent = DECK_LABELS[deckName] || deckName;
+  setTextContent(todayLabel, context.todayLabel);
+  setTextContent(deckLabel, DECK_LABELS[deckName] || deckName);
 
   if (!questions.length) {
-    indexLabel.textContent = "資料缺失";
-    panelTitle.textContent = "題庫未載入";
-    questionText.textContent = "目前找不到這一天的題目資料。";
-    answerText.textContent = "請確認 data/questions.js 是否存在且已成功載入。";
+    setTextContent(indexLabel, "資料缺失");
+    setTextContent(panelTitle, "題庫未載入");
+    setTextContent(questionText, "目前找不到這一天的題目資料。");
+    setTextContent(answerText, "請確認 data/questions.js 是否存在且已成功載入。");
     setAnswerVisibility(true);
     return;
   }
@@ -210,34 +245,44 @@ function renderWeekdayGame(deckName, context) {
   const questionIndex = progress.currentIndex ?? 0;
   const question = questions[questionIndex];
 
-  indexLabel.textContent = `${questionIndex + 1} / ${questions.length}`;
-  panelTitle.textContent = `${deckName} 今日題目`;
-  questionText.textContent = question.question;
-  answerText.textContent = question.answer;
+  setTextContent(indexLabel, `${questionIndex + 1} / ${questions.length}`);
+  setTextContent(panelTitle, `${deckName} 今日題目`);
+  setTextContent(questionText, question.question);
+  setTextContent(answerText, question.answer);
   setAnswerVisibility(true);
 
-  toggleAnswerButton.onclick = () => {
-    setAnswerVisibility(!answerVisible);
-  };
+  if (toggleAnswerButton) {
+    toggleAnswerButton.onclick = () => {
+      setAnswerVisibility(!answerVisible);
+    };
+  }
 
-  progressButton.onclick = () => {
-    toggleProgressPanel(context, deckName);
-  };
+  if (progressButton) {
+    progressButton.onclick = () => {
+      toggleProgressPanel(context, deckName);
+    };
+  }
 }
 
 function renderWeekend(context) {
-  todayLabel.textContent = context.todayLabel;
-  deckLabel.textContent = "週末休息";
-  indexLabel.textContent = "--";
-  weekdayPanel.classList.add("is-hidden");
-  weekendPanel.classList.remove("is-hidden");
+  setTextContent(todayLabel, context.todayLabel);
+  setTextContent(deckLabel, "週末休息");
+  setTextContent(indexLabel, "--");
+  setHidden(weekdayPanel, true);
+  setHidden(weekendPanel, false);
 
-  progressButton.onclick = () => {
-    toggleProgressPanel(context, DECK_ORDER[0]);
-  };
+  if (progressButton) {
+    progressButton.onclick = () => {
+      toggleProgressPanel(context, DECK_ORDER[0]);
+    };
+  }
 }
 
 function bindProgressControls() {
+  if (!progressDeckSelect || !progressFilterSelect) {
+    return;
+  }
+
   progressDeckSelect.onchange = () => {
     if (latestContext) {
       renderProgressPanel(latestContext, progressDeckSelect.value);
@@ -261,21 +306,23 @@ function startGame() {
   bindProgressControls();
 
   if (!window.BRAIN_QUIZ_DATA) {
-    todayLabel.textContent = context.todayLabel;
-    deckLabel.textContent = "載入失敗";
-    indexLabel.textContent = "--";
-    questionText.textContent = "題庫資料尚未載入。";
-    answerText.textContent = "請先產生並載入 data/questions.js。";
+    setTextContent(todayLabel, context.todayLabel);
+    setTextContent(deckLabel, "載入失敗");
+    setTextContent(indexLabel, "--");
+    setTextContent(questionText, "題庫資料尚未載入。");
+    setTextContent(answerText, "請先產生並載入 data/questions.js。");
     setAnswerVisibility(true);
-    progressButton.onclick = () => {
-      toggleProgressPanel(context, DECK_ORDER[0]);
-    };
+    if (progressButton) {
+      progressButton.onclick = () => {
+        toggleProgressPanel(context, DECK_ORDER[0]);
+      };
+    }
     return;
   }
 
   if (window.BRAIN_QUIZ_DATA[weekdayName]) {
-    weekdayPanel.classList.remove("is-hidden");
-    weekendPanel.classList.add("is-hidden");
+    setHidden(weekdayPanel, false);
+    setHidden(weekendPanel, true);
     renderWeekdayGame(weekdayName, context);
     return;
   }
