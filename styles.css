@@ -1,0 +1,257 @@
+:root {
+  --bg-top: #f7efe3;
+  --bg-bottom: #d8edf4;
+  --ink: #1d2a38;
+  --muted: #58677a;
+  --card: rgba(255, 252, 246, 0.92);
+  --card-strong: #fffdfa;
+  --line: rgba(29, 42, 56, 0.12);
+  --accent: #ed6a43;
+  --accent-deep: #cb4b26;
+  --accent-soft: rgba(237, 106, 67, 0.14);
+  --teal: #2e8c93;
+  --shadow: 0 24px 60px rgba(35, 49, 66, 0.14);
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI Variable Display", "Noto Sans TC", "Microsoft JhengHei",
+    sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.85), transparent 34%),
+    linear-gradient(165deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+}
+
+button {
+  font: inherit;
+}
+
+.page-shell {
+  position: relative;
+  min-height: 100vh;
+  padding: 40px 20px;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(14px);
+  opacity: 0.55;
+}
+
+.orb-a {
+  width: 280px;
+  height: 280px;
+  top: -80px;
+  right: -40px;
+  background: rgba(237, 106, 67, 0.24);
+}
+
+.orb-b {
+  width: 240px;
+  height: 240px;
+  left: -80px;
+  bottom: 40px;
+  background: rgba(46, 140, 147, 0.22);
+}
+
+.game-card {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-xl);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  animation: rise-in 0.55s ease-out;
+}
+
+.hero h1 {
+  margin: 8px 0 14px;
+  font-size: clamp(2.5rem, 6vw, 4.4rem);
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--teal);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-copy {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.status-panel {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 28px 0 22px;
+}
+
+.status-chip,
+.question-card,
+.answer-card,
+.content-panel {
+  border: 1px solid var(--line);
+  background: var(--card-strong);
+}
+
+.status-chip {
+  padding: 16px 18px;
+  border-radius: var(--radius-lg);
+}
+
+.status-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.status-chip strong {
+  font-size: 1.18rem;
+}
+
+.content-panel {
+  padding: 24px;
+  border-radius: var(--radius-xl);
+}
+
+.panel-head,
+.answer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.panel-head h2,
+.answer-head h3,
+.question-card h3 {
+  margin: 0;
+}
+
+.question-card,
+.answer-card {
+  margin-top: 18px;
+  padding: 22px;
+  border-radius: var(--radius-lg);
+}
+
+.copy-block {
+  margin: 16px 0 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: "Cascadia Code", "Courier New", monospace;
+  font-size: 0.98rem;
+  line-height: 1.72;
+}
+
+.answer-card {
+  background:
+    linear-gradient(180deg, rgba(237, 106, 67, 0.08), rgba(237, 106, 67, 0.02)),
+    var(--card-strong);
+}
+
+.copy-block.is-concealed {
+  filter: blur(8px);
+  user-select: none;
+}
+
+.primary-button,
+.secondary-button {
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.primary-button:hover,
+.secondary-button:hover {
+  transform: translateY(-1px);
+}
+
+.primary-button {
+  padding: 12px 18px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+  box-shadow: 0 10px 22px rgba(203, 75, 38, 0.28);
+}
+
+.secondary-button {
+  padding: 10px 16px;
+  color: var(--ink);
+  background: var(--accent-soft);
+}
+
+.weekend-copy {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.is-hidden {
+  display: none;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .page-shell {
+    padding: 20px 14px;
+  }
+
+  .game-card {
+    padding: 22px;
+  }
+
+  .status-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-head,
+  .answer-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+  }
+}

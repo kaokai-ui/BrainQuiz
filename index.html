@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrainQuiz 365</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+      <main class="game-card">
+        <header class="hero">
+          <p class="eyebrow">Daily Brain Training</p>
+          <h1>BrainQuiz 365</h1>
+          <p class="hero-copy">
+            依照今天的星期，自動帶出對應題庫，並沿著每週節奏穩定推進。
+          </p>
+        </header>
+
+        <section class="status-panel" aria-label="遊戲狀態">
+          <div class="status-chip">
+            <span class="status-label">今天</span>
+            <strong id="todayLabel">讀取中</strong>
+          </div>
+          <div class="status-chip">
+            <span class="status-label">題庫</span>
+            <strong id="deckLabel">讀取中</strong>
+          </div>
+          <div class="status-chip">
+            <span class="status-label">週次題號</span>
+            <strong id="indexLabel">--</strong>
+          </div>
+        </section>
+
+        <section id="weekdayPanel" class="content-panel">
+          <div class="panel-head">
+            <h2 id="panelTitle">今日題目</h2>
+            <button id="resetButton" class="secondary-button" type="button">
+              重設目前題庫進度
+            </button>
+          </div>
+
+          <article class="question-card">
+            <h3>題目</h3>
+            <pre id="questionText" class="copy-block">載入中...</pre>
+          </article>
+
+          <section class="answer-card">
+            <div class="answer-head">
+              <h3>答案框</h3>
+              <button id="toggleAnswerButton" class="primary-button" type="button">
+                顯示答案
+              </button>
+            </div>
+            <pre id="answerText" class="copy-block is-concealed">答案載入中...</pre>
+          </section>
+        </section>
+
+        <section id="weekendPanel" class="content-panel is-hidden" aria-live="polite">
+          <div class="panel-head">
+            <h2>今天沒有平日題庫</h2>
+          </div>
+          <p class="weekend-copy">
+            目前題庫只包含 Monday 到 Friday。今天先休息一下，下一個平日再回來挑戰。
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <script src="./data/questions.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
