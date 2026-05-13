@@ -34,12 +34,15 @@
           </div>
         </section>
 
+        <div class="action-row">
+          <button id="progressButton" class="secondary-button" type="button">
+            查看出題進度
+          </button>
+        </div>
+
         <section id="weekdayPanel" class="content-panel">
           <div class="panel-head">
             <h2 id="panelTitle">今日題目</h2>
-            <button id="resetButton" class="secondary-button" type="button">
-              重設目前題庫進度
-            </button>
           </div>
 
           <article class="question-card">
@@ -65,6 +68,51 @@
           <p class="weekend-copy">
             目前題庫只包含 Monday 到 Friday。今天先休息一下，下一個平日再回來挑戰。
           </p>
+        </section>
+
+        <section id="progressPanel" class="content-panel progress-panel is-hidden">
+          <div class="panel-head">
+            <h2>出題進度</h2>
+          </div>
+
+          <div class="progress-controls">
+            <label class="progress-control">
+              <span>題庫</span>
+              <select id="progressDeckSelect">
+                <option>讀取中</option>
+              </select>
+            </label>
+            <label class="progress-control">
+              <span>篩選</span>
+              <select id="progressFilterSelect">
+                <option value="all">全部題目</option>
+                <option value="used">只看已出過</option>
+                <option value="upcoming">只看未出題</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="progress-summary">
+            <div class="status-chip">
+              <span class="status-label">目前檢視</span>
+              <strong id="progressDeckLabel">--</strong>
+            </div>
+            <div class="status-chip">
+              <span class="status-label">已出過</span>
+              <strong id="progressUsedCount">--</strong>
+            </div>
+            <div class="status-chip">
+              <span class="status-label">尚未出題</span>
+              <strong id="progressRemainingCount">--</strong>
+            </div>
+            <div class="status-chip">
+              <span class="status-label">本輪題目</span>
+              <strong id="progressCurrentCount">--</strong>
+            </div>
+          </div>
+
+          <p id="progressHint" class="progress-hint">讀取中...</p>
+          <ul id="progressList" class="progress-list"></ul>
         </section>
       </main>
     </div>

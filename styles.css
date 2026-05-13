@@ -109,6 +109,19 @@ button {
   margin: 28px 0 22px;
 }
 
+.action-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 22px;
+}
+
+.progress-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
 .status-chip,
 .question-card,
 .answer-card,
@@ -215,6 +228,98 @@ button {
   line-height: 1.75;
 }
 
+.progress-panel {
+  margin-top: 22px;
+}
+
+.progress-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.progress-control {
+  display: block;
+}
+
+.progress-control span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.progress-control select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  color: var(--ink);
+  background: #fff;
+}
+
+.progress-hint {
+  margin: 18px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.progress-list {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  max-height: 540px;
+  overflow: auto;
+}
+
+.progress-item {
+  display: grid;
+  grid-template-columns: 72px 104px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.progress-item.is-current {
+  border-color: rgba(237, 106, 67, 0.38);
+  background: linear-gradient(180deg, rgba(237, 106, 67, 0.1), rgba(255, 255, 255, 0.96));
+}
+
+.progress-number {
+  font-weight: 700;
+}
+
+.progress-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.progress-badge-used {
+  color: #185248;
+  background: rgba(46, 140, 147, 0.16);
+}
+
+.progress-badge-upcoming {
+  color: #8b5d11;
+  background: rgba(244, 191, 86, 0.22);
+}
+
+.progress-preview {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .is-hidden {
   display: none;
 }
@@ -244,14 +349,27 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .progress-summary,
+  .progress-controls {
+    grid-template-columns: 1fr;
+  }
+
   .panel-head,
   .answer-head {
     align-items: flex-start;
     flex-direction: column;
   }
 
+  .action-row {
+    display: block;
+  }
+
   .primary-button,
   .secondary-button {
     width: 100%;
+  }
+
+  .progress-item {
+    grid-template-columns: 1fr;
   }
 }
